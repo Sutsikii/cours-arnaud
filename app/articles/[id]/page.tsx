@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { DeleteArticleButton } from '@/components/articles/DeleteArticleButton';
 
-
 const prisma = new PrismaClient();
 
 async function getArticle(id: string) {
@@ -21,7 +20,13 @@ async function getArticle(id: string) {
   return article;
 }
 
-export default async function ArticlePage({ params }: { params: { id: string } }) {
+type ArticlePageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export default async function ArticlePage({ params }: ArticlePageProps) {
   const article = await getArticle(params.id);
 
   return (
@@ -37,16 +42,15 @@ export default async function ArticlePage({ params }: { params: { id: string } }
           </div>
         </div>
         <div className="text-muted-foreground mb-8">
-          Publié le {new Date(article.createdAt).toLocaleDateString('fr-FR', {
+          Publié le{' '}
+          {new Date(article.createdAt).toLocaleDateString('fr-FR', {
             day: 'numeric',
             month: 'long',
             year: 'numeric'
           })}
         </div>
-        <div className="whitespace-pre-wrap">
-          {article.content}
-        </div>
+        <div className="whitespace-pre-wrap">{article.content}</div>
       </article>
     </div>
   );
-} 
+}
