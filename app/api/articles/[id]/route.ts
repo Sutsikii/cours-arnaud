@@ -60,7 +60,7 @@ export async function DELETE(
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json(
-      { success: false, message: "Une erreur est survenue" },
+      { success: false, message: `Une erreur est survenue : ${error}` },
       { status: 500 }
     );
   }
