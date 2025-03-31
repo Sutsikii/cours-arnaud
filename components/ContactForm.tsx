@@ -45,6 +45,7 @@ export function ContactForm() {
         }
       }
     } catch (error) {
+      console.error('Erreur lors de l\'envoi du message:', error);
       toast.error("Une erreur est survenue lors de l'envoi du message");
     } finally {
       setIsSubmitting(false);
