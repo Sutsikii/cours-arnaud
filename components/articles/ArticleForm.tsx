@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { createArticle, updateArticle } from '@/app/actions/articles';
 
 interface ArticleFormProps {
   article?: Article | null;
@@ -25,26 +26,23 @@ export function ArticleForm({ article }: ArticleFormProps) {
     setIsSubmitting(true);
 
     try {
-      const url = article ? `/api/articles/${article.id}` : '/api/articles';
-      const method = article ? 'PUT' : 'POST';
+      const result = article 
+        ? await updateArticle(article.id.toString(), formData)
+        : await createArticle(formData);
 
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Une erreur est survenue');
+      if (result.success && result.data) {
+        toast.success(article ? 'Article modifié avec succès' : 'Article créé avec succès');
+        router.push(`/articles/${result.data.id}`);
+        router.refresh();
+      } else {
+        if (result.error?.errors) {
+          result.error.errors.forEach((err) => {
+            toast.error(`${err.field}: ${err.message}`);
+          });
+        } else {
+          toast.error(result.error?.message || 'Une erreur est survenue');
+        }
       }
-
-      const result = await response.json();
-      
-      toast.success(article ? 'Article modifié avec succès' : 'Article créé avec succès');
-      router.push(`/articles/${result.id}`);
-      router.refresh();
     } catch (error) {
       toast.error('Une erreur est survenue');
       console.error('Erreur:', error);
