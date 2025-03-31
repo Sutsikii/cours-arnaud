@@ -20,7 +20,8 @@ async function getArticle(id: string) {
   return article;
 }
 
-export default async function EditArticlePage({ params }: { params: { id: string } }) {
+export default async function EditArticlePage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const article = await getArticle(params.id);
   const isNew = params.id === 'new';
 
