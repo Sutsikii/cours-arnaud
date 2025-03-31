@@ -12,7 +12,7 @@ const articleSchema = z.object({
 export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
-) {
+): Promise<NextResponse> {
   try {
     const body = await request.json();
     const validatedData = articleSchema.parse(body);
@@ -49,7 +49,7 @@ export async function PUT(
 export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
-) {
+): Promise<NextResponse> {
   try {
     await prisma.article.delete({
       where: {
