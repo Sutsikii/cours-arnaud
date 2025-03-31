@@ -15,7 +15,7 @@ interface PokemonResponse {
 
 async function getPokemons(): Promise<PokemonResponse> {
   const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20', {
-    next: { revalidate: 3600 } // Revalide toutes les heures
+    next: { revalidate: 3600 } 
   });
   
   if (!res.ok) {
