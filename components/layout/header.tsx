@@ -9,6 +9,12 @@ export function Header() {
                 <Link href="/" className="hover:text-primary transition-colors">
                     Accueil
                 </Link>
+                <Link href="/pokemon" className="hover:text-primary transition-colors">
+                    Pokémon
+                </Link>
+                <Link href="/rick-and-morty" className="hover:text-primary transition-colors">
+                    Rick et morty
+                </Link>
                 <Link href="/a-propos" className="hover:text-primary transition-colors">
                     À propos
                 </Link>
