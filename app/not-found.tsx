@@ -1,8 +1,12 @@
 'use client';
 
-import Lottie from 'lottie-react';
-import error404Animation from '../public/404-animation.json';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import error404Animation from '../public/404-animation.json';
+
+const Lottie = dynamic(() => import('lottie-react'), {
+  ssr: false,
+});
 
 export default function NotFound() {
   return (
